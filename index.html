@@ -12,31 +12,31 @@
 
 body{
   height:100vh;
-  background:linear-gradient(135deg,#ffd6e8,#ffeef5,#fff1dc);
+  background:linear-gradient(135deg,#ffd1e6,#ffe9f2,#fff3df);
   font-family:'Poppins',sans-serif;
   overflow:hidden;
 }
 
-/* BOOM BLOOM */
-.bloom{
+/* FLOATING TEDDY SHAPES */
+.teddy{
   position:fixed;
-  inset:0;
-  pointer-events:none;
-  z-index:1;
+  width:120px;
+  height:120px;
+  background:#ffb6d5;
+  border-radius:30% 30% 50% 50%;
+  opacity:0.15;
+  filter:blur(2px);
+  animation:float 14s infinite ease-in-out alternate;
 }
 
-.bloom span{
-  position:absolute;
-  width:14px;
-  height:14px;
-  background:rgba(255,182,213,0.8);
-  border-radius:50%;
-  animation:bloom 1.6s ease-out forwards;
-}
+.t1{top:10%;left:8%}
+.t2{top:60%;left:12%;animation-duration:18s}
+.t3{top:20%;right:10%;animation-duration:20s}
+.t4{bottom:8%;right:18%;animation-duration:22s}
 
-@keyframes bloom{
-  from{transform:scale(0);opacity:1}
-  to{transform:scale(14);opacity:0}
+@keyframes float{
+  from{transform:translateY(0)}
+  to{transform:translateY(40px)}
 }
 
 /* CENTER CARD */
@@ -47,18 +47,18 @@ body{
   display:flex;
   align-items:center;
   justify-content:center;
-  padding:22px;
+  padding:20px;
 }
 
 .card{
   max-width:760px;
-  padding:50px 46px;
-  border-radius:26px;
-  background:rgba(255,255,255,0.65);
+  padding:46px;
+  border-radius:28px;
+  background:rgba(255,255,255,0.7);
   backdrop-filter:blur(16px);
   box-shadow:0 30px 70px rgba(255,105,180,0.25);
   text-align:center;
-  animation:fadeUp 1.8s ease forwards;
+  animation:fadeUp 1.6s ease forwards;
 }
 
 @keyframes fadeUp{
@@ -66,24 +66,60 @@ body{
   to{opacity:1;transform:translateY(0)}
 }
 
+/* PHOTO */
+.photo-wrap{
+  width:160px;
+  height:160px;
+  margin:0 auto 26px;
+  border-radius:50%;
+  overflow:hidden;
+  position:relative;
+  box-shadow:0 0 0 6px rgba(255,182,213,0.6),
+             0 0 30px rgba(255,105,180,0.45);
+  animation:photoFade 2.2s ease forwards;
+}
+
+@keyframes photoFade{
+  from{opacity:0;transform:scale(0.9)}
+  to{opacity:1;transform:scale(1)}
+}
+
+.photo-wrap::after{
+  content:"";
+  position:absolute;
+  inset:-40%;
+  background:linear-gradient(120deg,transparent,rgba(255,255,255,0.6),transparent);
+  animation:shine 4s infinite;
+}
+
+@keyframes shine{
+  from{transform:translateX(-100%)}
+  to{transform:translateX(100%)}
+}
+
+.photo-wrap img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+/* TEXT */
 h1{
   font-family:'Playfair Display',serif;
-  font-size:3.1rem;
+  font-size:3rem;
   color:#c94b82;
-  margin-bottom:18px;
 }
 
 .name{
-  font-size:1.5rem;
-  font-weight:500;
+  font-size:1.4rem;
+  margin:10px 0 18px;
   color:#8a3d63;
-  margin-bottom:18px;
 }
 
 .divider{
   width:90px;
   height:2px;
-  margin:22px auto 30px;
+  margin:22px auto 28px;
   background:linear-gradient(90deg,transparent,#e89ac7,transparent);
 }
 
@@ -92,21 +128,24 @@ p{
   line-height:1.85;
   color:#5c3b4d;
 }
-
-.signature{
-  margin-top:36px;
-  font-size:0.95rem;
-  color:#8b5c74;
-}
 </style>
 </head>
 
 <body>
 
-<div class="bloom" id="bloom"></div>
+<div class="teddy t1"></div>
+<div class="teddy t2"></div>
+<div class="teddy t3"></div>
+<div class="teddy t4"></div>
 
 <div class="container">
   <div class="card">
+
+    <div class="photo-wrap">
+      <!-- PUT HER PHOTO HERE -->
+      <img src="kajol.jpg" alt="Kajol">
+    </div>
+
     <h1>Happy Birthday</h1>
     <div class="name">Kajol</div>
 
@@ -122,23 +161,8 @@ p{
       already consider you very special. 🎂✨
     </p>
 
-    <div class="signature">
-      — Have the most beautiful day
-    </div>
   </div>
 </div>
-
-<script>
-// BOOM EFFECT
-const bloom=document.getElementById("bloom");
-for(let i=0;i<18;i++){
-  const s=document.createElement("span");
-  s.style.left="50%";
-  s.style.top="50%";
-  s.style.animationDelay=(i*40)+"ms";
-  bloom.appendChild(s);
-}
-</script>
 
 </body>
 </html>
