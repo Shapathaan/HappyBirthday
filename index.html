@@ -51,12 +51,15 @@ body{
   100%{transform:translate(0,0) rotate(-3deg)}
 }
 
-/* ================= HEART SHOWER ================= */
+/* ================= HEART SHOWER (FIXED COLOR) ================= */
 .heart{
   position:fixed;
   bottom:-30px;
   font-size:20px;
-  color:#ff8fc4;
+  color:#ff4fa0; /* DARK PINK */
+  text-shadow:
+    0 0 6px rgba(255,79,160,0.7),
+    0 0 14px rgba(255,140,200,0.8);
   animation:heartRise 6s linear infinite;
   z-index:1;
 }
@@ -153,7 +156,6 @@ h1{
   color:#c94b82;
 }
 
-/* 🔥 KAJOL NAME – BIG, BOLD, GLOWING */
 .name{
   font-size:2.2rem;
   font-weight:700;
@@ -228,11 +230,11 @@ p{
 </div>
 
 <script>
-/* HEART SHOWER */
+/* HEART SHOWER – DARK PINK */
 for(let i=0;i<14;i++){
   const h=document.createElement("div");
   h.className="heart";
-  h.innerHTML="🤍";
+  h.innerHTML="💗";
   h.style.left=Math.random()*100+"vw";
   h.style.animationDelay=(Math.random()*5)+"s";
   document.body.appendChild(h);
