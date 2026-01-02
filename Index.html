@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Happy Birthday</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+  height:100vh;
+  background:#000;
+  overflow:hidden;
+  color:#fff;
+  font-family:'Inter',sans-serif;
+}
+
+/* STARFIELD */
+canvas{
+  position:fixed;
+  inset:0;
+  z-index:0;
+}
+
+/* CONTENT */
+.container{
+  position:relative;
+  z-index:2;
+  height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:30px;
+}
+
+.card{
+  max-width:720px;
+  animation:fadeUp 2s ease forwards;
+}
+
+h1{
+  font-family:'Playfair Display',serif;
+  font-size:3rem;
+  letter-spacing:1px;
+  margin-bottom:20px;
+}
+
+.divider{
+  width:90px;
+  height:2px;
+  margin:25px auto;
+  background:linear-gradient(90deg,transparent,#fff,transparent);
+}
+
+p{
+  font-size:1.1rem;
+  line-height:1.9;
+  color:#dcdcdc;
+  min-height:120px;
+}
+
+.signature{
+  margin-top:40px;
+  font-size:0.9rem;
+  letter-spacing:1px;
+  color:#aaa;
+}
+
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(40px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* TAP EFFECT */
+.ripple{
+  position:absolute;
+  border-radius:50%;
+  transform:scale(0);
+  animation:ripple 800ms ease-out;
+  background:rgba(255,255,255,0.25);
+  pointer-events:none;
+}
+
+@keyframes ripple{
+  to{
+    transform:scale(6);
+    opacity:0;
+  }
+}
+</style>
+</head>
+<body>
+
+<canvas id="stars"></canvas>
+
+<div class="container">
+  <div class="card">
+    <h1>Happy Birthday</h1>
+    <div class="divider"></div>
+    <p id="text"></p>
+    <div class="signature">— Have a great year ahead</div>
+  </div>
+</div>
+
+<script>
+// ===== STARFIELD =====
+const canvas = document.getElementById("stars");
+const ctx = canvas.getContext("2d");
+let w,h,stars=[];
+
+function resize(){
+  w=canvas.width=window.innerWidth;
+  h=canvas.height=window.innerHeight;
+}
+window.addEventListener("resize",resize);
+resize();
+
+for(let i=0;i<120;i++){
+  stars.push({
+    x:Math.random()*w,
+    y:Math.random()*h,
+    r:Math.random()*1.5,
+    s:Math.random()*0.5+0.2
+  });
+}
+
+function drawStars(){
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle="white";
+  stars.forEach(st=>{
+    ctx.globalAlpha=Math.random();
+    ctx.beginPath();
+    ctx.arc(st.x,st.y,st.r,0,Math.PI*2);
+    ctx.fill();
+    st.y+=st.s;
+    if(st.y>h){st.y=0;st.x=Math.random()*w}
+  });
+  requestAnimationFrame(drawStars);
+}
+drawStars();
+
+// ===== TYPEWRITER =====
+const message = 
+"Wishing you a year filled with clarity, confidence, and moments that quietly matter.\n\n" +
+"You have a natural way of leaving a good impression without trying — and that’s rare.";
+
+let i=0;
+const textEl=document.getElementById("text");
+
+function type(){
+  if(i<message.length){
+    textEl.innerHTML += message[i]==="\n" ? "<br><br>" : message[i];
+    i++;
+    setTimeout(type,35);
+  }
+}
+setTimeout(type,900);
+
+// ===== TAP / CLICK EFFECT =====
+document.addEventListener("click",e=>{
+  const r=document.createElement("span");
+  r.className="ripple";
+  r.style.left=e.clientX+"px";
+  r.style.top=e.clientY+"px";
+  r.style.width=r.style.height="40px";
+  document.body.appendChild(r);
+  setTimeout(()=>r.remove(),800);
+});
+</script>
+
+</body>
+</html>
